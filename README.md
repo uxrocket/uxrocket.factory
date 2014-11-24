@@ -1,10 +1,5 @@
-uxrocket.factory
-================
-
-Plugin Factory
-
+UXRocket Plugin Factory
 ----------
 Dependencies:
 - UXRocket.Utils
-- Lodash
 - jQuery
