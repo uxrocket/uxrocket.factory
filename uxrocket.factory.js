@@ -126,9 +126,10 @@
      */
     PluginCore.prototype.fetchSource = function(){
         // Collect variables
-        var _this  = this,
-            dataSource,
-            source = this.options.source;
+        var _this       = this,
+            source      = this.options.source,
+            sourceType  = __.type(source),
+            dataSource;
 
         // RegExp tests.
         var isFunctionCall = /(.*)\((.*)\)/;
@@ -139,49 +140,67 @@
             _this.trigger("sourceFetched");
         }
 
-        // Try fetch as function call.
-        if(isFunctionCall.test(source)){
-            // Evaluate function.
-            __.evaluateFunctionCall(source, function(fetchedData){
-                triggerFetchCompletion(fetchedData);
-            }, {async: true});
-            return;
-        }
-
-        // Try fetch as nested object.
-        dataSource = __.parseNesting(source);
-        if(dataSource) {
-            // If source is function Run asynchronously and get data from function.
-            if(typeof dataSource === "function"){
-                __.runAsync(function(){
-                    triggerFetchCompletion(dataSource())
-                });
+        // Check type of source.
+        // If source provided as string.
+        if(sourceType === "string"){
+            // Try fetch as function call.
+            if(isFunctionCall.test(source)){
+                // Evaluate function.
+                __.evaluateFunctionCall(source, function(fetchedData){
+                    triggerFetchCompletion(fetchedData);
+                }, {async: true});
+                return;
             }
-            // If not function, simply assign
-            else{
-                triggerFetchCompletion(dataSource);
+
+            // Try fetch as nested object.
+            dataSource = __.parseNesting(source);
+            if(dataSource) {
+                // If source is function Run asynchronously and get data from function.
+                if(typeof dataSource === "function"){
+                    __.runAsync(function(){
+                        triggerFetchCompletion(dataSource())
+                    });
+                }
+                // If not function, simply assign
+                else{
+                    triggerFetchCompletion(dataSource);
+                }
+                return;
             }
-            return;
+
+            // Try fetch as ajax call.
+            if(__.isUrl(source)){
+                $.ajax($.extend(this.options.ajax, {
+                    url     : source,
+                    success : triggerFetchCompletion
+                }));
+                return;
+            }
+
+            // Try fetch from DOM object.
+            dataSource = $(source);
+            if(dataSource.length){
+                triggerFetchCompletion(dataSource.html());
+                return;
+            }
+
+            // Use as is.
+            triggerFetchCompletion(source);
         }
 
-        // Try fetch as ajax call.
-        if(__.isUrl(source)){
-            $.ajax($.extend(this.options.ajax, {
-                url     : source,
-                success : triggerFetchCompletion
-            }));
-            return;
+        // If source provided as function
+        else if(sourceType === "function"){
+            // Run async.
+            __.runAsync(function(){
+                triggerFetchCompletion(source())
+            });
         }
 
-        // Try fetch from DOM object.
-        dataSource = $(source);
-        if(dataSource.length){
-            triggerFetchCompletion(dataSource.html());
-            return;
+        // If anything else.
+        else {
+            // Use as is.
+            triggerFetchCompletion(source);
         }
-
-        // Use as is.
-        triggerFetchCompletion(source);
     };
 
     /**
