@@ -1,0 +1,1 @@
+- Seperate sourceFetcher from sourceDetector and make all fetching functions seperated.

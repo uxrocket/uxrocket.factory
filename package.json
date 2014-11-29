@@ -1,0 +1,25 @@
+{
+  "name": "uxrocket.factory",
+  "version": "0.1.0",
+  "description": "Plugin factory for jQuery.",
+  "main": "src/uxrocket.factory.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:uxrocket/uxrocket.factory.git"
+  },
+  "keywords": [
+    "plugin factory",
+    "jquery plugin"
+  ],
+  "author": "Rameş Aliyev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uxrocket/uxrocket.factory/issues"
+  },
+  "homepage": "https://github.com/uxrocket/uxrocket.factory",
+  "dependencies": {
+    "jquery": "^1.11.1",
+    "uxrocket.utils": "^0.1.0"
+  }
+}
