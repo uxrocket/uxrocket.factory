@@ -1,1 +1,3 @@
 - Seperate sourceFetcher from sourceDetector and make all fetching functions seperated.
+- Add support for other JS template types not only for handlebars; a: Bilal
+- Add legacy support for not only wrapper but also element itself
