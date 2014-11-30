@@ -24,7 +24,7 @@
     "coverage",
     "docs",
     "grunt-tasks",
-    "src",
+    "_src_",
     "build",
     "gruntfile.js",
     "package.json"
