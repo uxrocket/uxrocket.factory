@@ -1,0 +1,36 @@
+{
+  "name": "uxrocket.factory",
+  "version": "2.0.0",
+  "homepage": "https://github.com/uxrocket/uxrocket.factory",
+  "authors": [
+    "Rameş Aliyev <creator@ramesaliyev.com>"
+  ],
+  "description": "Universal Plugin Factory",
+  "main": "src/uxrocket.factory.core.js",
+  "keywords": [
+    "plugin",
+    "factory",
+    "jquery",
+    "plugin"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "*.md",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "coverage",
+    "docs",
+    "grunt-tasks",
+    "_src_",
+    "build",
+    "gruntfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "jquery": "^1",
+    "uxrocket.utils": "~0.1.0"
+  }
+}
