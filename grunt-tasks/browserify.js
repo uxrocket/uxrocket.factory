@@ -6,7 +6,7 @@ module.exports = function(grunt){
             files: [{
                 expand  : true,
                 cwd     : 'dist',
-                src     : ['**/*.js'],
+                src     : ['factory.js'],
                 dest    : 'dist'
             }]
         }

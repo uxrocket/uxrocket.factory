@@ -3,7 +3,8 @@ module.exports = function(grunt){
 
     grunt.config('babel', {
         options: {
-            //sourceMap: true
+            //sourceMap: true,
+            modules: "common"
         },
         dist: {
             files: [{

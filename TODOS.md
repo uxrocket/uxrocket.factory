@@ -1,1 +1,1 @@
-
+- Extract components from Factory to their own repos. (Utils, EventEmitter, Store).
