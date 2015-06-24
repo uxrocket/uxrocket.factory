@@ -5,9 +5,9 @@ module.exports = function(grunt){
         dist: {
             files: [{
                 expand  : true,
-                cwd     : 'dist',
-                src     : ['factory.js'],
-                dest    : 'dist'
+                cwd     : 'dist/plugins',
+                src     : ['**/*.*.js'],
+                dest    : 'dist/plugins'
             }]
         }
     });

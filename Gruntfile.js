@@ -22,5 +22,5 @@ module.exports = function(grunt){
     grunt.loadTasks("grunt-tasks");
 
     // Register tasks.
-    grunt.registerTask("default", ["babel", "browserify"]);
+    grunt.registerTask("default", ["babel", "browserify", "uglify", "clean"]);
 };

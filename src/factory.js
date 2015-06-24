@@ -8,11 +8,8 @@ import Core from "./core/core";
  *  Actual Factory that extends from Core.
  */
 class Factory extends Core {
-    
-}
 
-// REMOVE.
-window.Factory = new Factory();
+}
 
 // Export.
 export default Factory;

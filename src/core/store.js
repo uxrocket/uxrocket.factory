@@ -37,7 +37,7 @@ class Store extends EventEmitter {
      */
     _write(key, value, event){
         this.storage[key] = value;
-        this.emit('write', {key: key, value: value});
+        this.emit('write', {key, value});
     }
 
     /**
@@ -47,7 +47,7 @@ class Store extends EventEmitter {
      * @param {*} value
      */
     write(key, value){
-        this.write(key, value, 'write');
+        this._write(key, value, 'write');
     }
 
     /**
@@ -56,8 +56,8 @@ class Store extends EventEmitter {
      * @param {string} key
      * @param {*} value
      */
-    update(key, data){
-        this.write(key, value, 'update');
+    update(key, value){
+        this._write(key, value, 'update');
     }
 
     /**
@@ -67,6 +67,7 @@ class Store extends EventEmitter {
      */
     remove(key){
         delete this.storage[key];
+        this.emit('remove', {key});
     }
 
     /**
@@ -74,6 +75,7 @@ class Store extends EventEmitter {
      */
     destroy(){
         this.storage = {};
+        this.emit('destroy');
     }
 }
 
