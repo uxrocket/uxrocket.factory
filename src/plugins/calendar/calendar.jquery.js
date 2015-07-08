@@ -12,6 +12,7 @@ class CalendarJquery extends JqueryAdaptor{
     constructor(){
         super();
 
+        // Register plugin.
         this.register('calendar', Calendar, {version: "0.1.0"});
     }
 }
