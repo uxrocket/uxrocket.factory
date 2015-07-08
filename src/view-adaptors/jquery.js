@@ -48,7 +48,7 @@ class JqueryAdaptor extends View {
                     options.$el = $el;
 
                     // Create plugin.
-                    createdPlugin = new plugin(options, true);
+                    createdPlugin = new plugin(options);
 
                     // Register plugin to data.
                     $el.data(slug, createdPlugin);

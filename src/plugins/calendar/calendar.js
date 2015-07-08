@@ -1,21 +1,17 @@
 "use strict";
 
 // Import dependencies.
-import Factory from "../../factory";
-import Date2   from "./core/date2/date2";
+import Date2   from "../date2/date2";
 import assign  from "../../utils/assign";
 
 /**
  *  Calendar
- *  Actual Factory that extends from Core.
  */
-class Calendar extends Factory {
+class Calendar {
     constructor(options){
-        super();
-
         // Default options.
         var defaultOptions = {
-          weekStartDay: 1
+          firstDayOfWeek: Date2.firstDayOfWeek
         };
 
         // Create instance options.
@@ -23,15 +19,6 @@ class Calendar extends Factory {
 
         // Register current date info.
         this.today = new Date2();
-
-        // Register events.
-        this.eventEmitter.on('ready', () => this.init());
-    }
-
-    /**
-     * Initialization.
-     */
-    init(){
     }
 
     /**
@@ -50,7 +37,7 @@ class Calendar extends Factory {
       var monthMap        = [[],[],[],[],[],[]],
           daysInMonth     = date.getDaysInMonth(),
           firstDayOfMonth = date.getDay(),
-          firstDayOffset  = firstDayOfMonth - Date2.firstDayOfWeek,
+          firstDayOffset  = firstDayOfMonth - this.options.firstDayOfWeek,
           currentWeek     = 0;
 
       // If month not start from monday.

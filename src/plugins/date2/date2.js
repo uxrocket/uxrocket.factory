@@ -2,8 +2,8 @@
 // FORK OF: https://github.com/vitch/jquery-methods/blob/master/date.js
 "use strict";
 
-import zeroLead from '../../../../utils/zero-lead';
-import assign   from '../../../../utils/assign'
+import zeroLead from '../../utils/zero-lead';
+import assign   from '../../utils/assign'
 
 /**
  * Date2
