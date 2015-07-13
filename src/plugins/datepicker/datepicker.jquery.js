@@ -1,20 +1,18 @@
 "use strict";
 
 // Import dependencies.
-import Datepicker       from "./datepicker";
+import DatepickerCore   from "./core/datepicker.core";
+import DatepickerView   from "./core/datepicker.view";
 import JqueryAdaptor    from "../../view-adaptors/jquery"
 
 /**
  *  Datepicker as jQuery plugin.
  */
 class DatepickerJquery extends JqueryAdaptor{
-    constructor(){
-        super();
-
-        // Register plugin.
-        this.register('datepicker', Datepicker, {version: "0.1.0"});
+    constructor(options){
+        super(options, DatepickerCore, DatepickerView);
     }
 }
 
-// Create jQuery plugin.
-new DatepickerJquery();
+// Register plugin.
+JqueryAdaptor.register('datepicker', DatepickerJquery, {version: "0.1.0"});

@@ -1,3 +1,10 @@
-/**
- * Created by ramesaliyev on 25/06/15.
- */
+module.exports = function(grunt){
+    'use strict';
+
+    grunt.config('watch', {
+        scripts: {
+            files: ['src/**/*.js'],
+            tasks: ['default']
+        }
+    });
+};

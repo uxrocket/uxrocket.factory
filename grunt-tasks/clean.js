@@ -2,6 +2,7 @@ module.exports = function(grunt){
     'use strict';
 
     grunt.config('clean', {
-        dist: ['dist/**/*', '!dist/plugins/**']
+        dist_before: ['dist/**/*'],
+        dist_after : ['dist/**/*', '!dist/plugins/**']
     });
 };

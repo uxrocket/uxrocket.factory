@@ -6,7 +6,7 @@
     "Rameş Aliyev <creator@ramesaliyev.com>"
   ],
   "description": "Universal Plugin Factory",
-  "main": "src/uxrocket.factory.core.js",
+  "main": "src/factory.js",
   "keywords": [
     "plugin",
     "factory",

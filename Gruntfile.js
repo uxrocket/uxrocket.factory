@@ -22,5 +22,6 @@ module.exports = function(grunt){
     grunt.loadTasks("grunt-tasks");
 
     // Register tasks.
-    grunt.registerTask("default", ["babel", "browserify", "uglify", "clean"]);
+    grunt.registerTask("default", ["clean:dist_before", "babel", "browserify", "uglify", "clean:dist_after"]);
+    grunt.registerTask("install", ["gitclone"]);
 };

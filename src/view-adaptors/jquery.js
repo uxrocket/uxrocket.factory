@@ -7,9 +7,14 @@ import collectAttributes from "../utils/collect-attributes"
 /**
  *  jQuery Adaptor
  */
-class JqueryAdaptor extends View {
-    constructor(){
-        super();
+class JqueryAdaptor{
+    constructor(options, Core, View){
+      // Create datepicker.
+      this.Core = new Core(options);
+      this.View = new View(options);
+
+      // Attach event emitter.
+      this.eventEmitter = this.Core.eventEmitter;
     }
 
     executeCommand(params){
@@ -20,7 +25,7 @@ class JqueryAdaptor extends View {
         if(typeof _function === "function") _function.apply(this, params.slice(1));
     }
 
-    register(slug, plugin, registerOptions){
+    static register(slug, plugin, registerOptions){
         // Create jQuery plugin controller.
         var jQueryPlugin = function(_options){
             if (typeof _options === "undefined") _options = {};
