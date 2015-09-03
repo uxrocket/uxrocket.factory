@@ -1,7 +1,7 @@
 {
   "name": "uxrocket.factory",
-  "version": "0.1.0",
-  "description": "Plugin factory for jQuery.",
+  "version": "1.0.0",
+  "description": "UX Rocket Plugin Core",
   "main": "src/uxrocket.factory.js",
   "scripts": {},
   "repository": {
@@ -12,14 +12,34 @@
     "plugin factory",
     "jquery plugin"
   ],
-  "author": "Rameş Aliyev",
+  "author": "Rameş Aliyev <ramesaliyev@gmail.com> (https://github.com/ramesaliyev)",
+  "contributors": [
+    {
+      "name": "Bilal Çınarlı",
+      "email": "bcinarli@gmail.com",
+      "url": "https://github.com/bcinarli"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/uxrocket/uxrocket.factory/issues"
   },
   "homepage": "https://github.com/uxrocket/uxrocket.factory",
   "dependencies": {
-    "jquery": "^1.11.1",
-    "uxrocket.utils": "^0.1.0"
+    "jquery": "^2.1.14"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-header": "^1.7.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-mocha-phantomjs": "^0.10.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.0",
+    "mocha": "^2.3.0"
   }
 }
