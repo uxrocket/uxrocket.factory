@@ -21,7 +21,7 @@ var tasks = {
             .pipe(plugins.sourcemaps.init())
             .pipe(plugins.concat('uxrocket.factory.js'))
             .on('error', plugins.notify.onError('Error: <%= error.message %>'))
-            .pipe(plugins.sourcemaps.write('./'))
+            .pipe(plugins.sourcemaps.write('./', {includeContent: false, sourceRoot: '../src'}))
             .pipe(plugins.notify({message: 'Merge tasks completed', onLast: true}))
             .pipe(gulp.dest('dist'));
     },

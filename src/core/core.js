@@ -13,26 +13,52 @@
         factory(require('jquery'));
     } else {
         // Browser globals
-        factory(jQuery, window, document);
+        factory(jQuery, window);
     }
-}(function($, window, document) {
-
-    var defaults = {},
-        events = {};
-
-    var uxrFactoryCore = function(el, options, selector) {
-
+}(function($, window) {
+    var uxrPlugin = function() {
     };
 
-    $.extend(uxrFactoryCore.prototype, {
-        init: function() {
+    $.extend(uxrPlugin.prototype, {
+        init           : function(el, options, selector) {
+            this.options = $.extend(true, {}, this.defaults, options);
+
+            this.el = el;
+            this.$el = $(el);
+            this.selector = selector;
+            this._instance = i;
+
+            this.utils = new window.uxrPluginUtils({});
+
+            return this;
+        },
+        defaults       : {
+            onReady: false
+        },
+        register       : function() {
+
+        },
+        addClasses     : function() {
+            this.$el.addClass(this.utils.getClassname('ready'));
+        },
+        removeClasses  : function() {
+            this.$el.removeClass(this.utils.getClassname('ready'));
+        },
+        unBindUIActions: function() {
+            this.$el.off('.' + slug);
+        },
+        update         : function(options) {
+
+        },
+        destroy        : function() {
 
         },
 
-        _build: function() {
-
+        cleanUp: function() {
+            // remove wrapper
+            $('.' + this.utils.getClassname('wrap') + '-' + this._instance).remove();
         }
     });
 
-    window.uxrFactoryCore = uxrFactoryCore;
+    window.uxrPlugin = uxrPlugin;
 }));

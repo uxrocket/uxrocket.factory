@@ -13,31 +13,12 @@
         factory(require('jquery'));
     } else {
         // Browser globals
-        factory(jQuery, window, document);
+        factory(jQuery, window);
     }
-}(function($, window, document) {
-    var uxrPlugins = [];
+}(function($, window) {
+    var UXRocket = function(){};
 
-    var uxrFactory = function(name, defaults) {
-        this._build(name, defaults);
+    window.UXRocket = $.uxrocket = UXRocket;
 
-        this._register(name);
-    };
-
-    $.extend(uxrFactory.prototype, {
-        _register: function(name){
-            $.fn['uxr' + name] = $['uxr' + name] = function(options){
-                console.log(options);
-
-                return this.each(function(){
-                    $.data(this, 'uxr' + name, options);
-                });
-            };
-        },
-        _build: function(name, defaults){
-
-        }
-    });
-
-    window.uxrFactory = uxrFactory;
+    console.warn('UX Rocket Factory is in alpha for now. Only Plugin utils module is available');
 }));
