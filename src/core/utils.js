@@ -76,7 +76,16 @@
 
         this.toString = function() {
             return this.name + ' (' + this.slug + '): ' + this.message;
-        }
+        };
+    };
+
+    uxrPluginUtils.prototype.position = function(el, target){
+        var boundries = el.getBoundingClientRect(),
+            top = boundries.top + boundries.height,
+            left = boundries.left,
+            width = boundries.width;
+
+        return target.css({top: top, left: left, minWidth: width});
     };
 
     uxrPluginUtils.version = '0.1.0';

@@ -16,6 +16,30 @@
         factory(jQuery, window);
     }
 }(function($, window) {
+    var UXRocket = function(){};
+
+    window.UXRocket = $.uxrocket = UXRocket;
+
+    console.warn('UX Rocket Factory is in alpha for now. Only Plugin utils module is available');
+}));
+/**
+ * @author Bilal Cinarli
+ */
+
+'use strict';
+
+(function(factory) {
+    if(typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if(typeof exports === 'object' && typeof require === 'function') {
+        // Browserify
+        factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery, window);
+    }
+}(function($, window) {
     var uxrPlugin = function() {
     };
 
@@ -140,35 +164,20 @@
 
         this.toString = function() {
             return this.name + ' (' + this.slug + '): ' + this.message;
-        }
+        };
+    };
+
+    uxrPluginUtils.prototype.position = function(el, target){
+        var boundries = el.getBoundingClientRect(),
+            top = boundries.top + boundries.height,
+            left = boundries.left,
+            width = boundries.width;
+
+        return target.css({top: top, left: left, minWidth: width});
     };
 
     uxrPluginUtils.version = '0.1.0';
 
     window.uxrPluginUtils = uxrPluginUtils;
-}));
-/**
- * @author Bilal Cinarli
- */
-
-'use strict';
-
-(function(factory) {
-    if(typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if(typeof exports === 'object' && typeof require === 'function') {
-        // Browserify
-        factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery, window);
-    }
-}(function($, window) {
-    var UXRocket = function(){};
-
-    window.UXRocket = $.uxrocket = UXRocket;
-
-    console.warn('UX Rocket Factory is in alpha for now. Only Plugin utils module is available');
 }));
 //# sourceMappingURL=uxrocket.factory.js.map
