@@ -16,6 +16,8 @@
         factory(jQuery, window);
     }
 }(function($, window) {
+    var i = 1;
+
     var uxrPlugin = function() {
     };
 
