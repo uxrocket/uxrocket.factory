@@ -191,7 +191,8 @@
                             _renderedLoop = '\n';
 
                         loopData.map(function(row) {
-                            _renderedLoop += _this._replace(loop[2], row, loop[1]);
+							var _row = _this._replace(loop[2], row, loop[1]);
+                            _renderedLoop += _this.conditions(_row, row);
                         });
 
                         rendered = rendered.replace(loop[0], _renderedLoop);
@@ -205,9 +206,7 @@
 
     uxrPluginUtils.prototype.render = function(template, data) {
         var _rendered = template,
-            params    = uxrPluginUtils.template._transform(data),
-            _ifExp    = /{{#if ([a-zA-Z0-9]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
-            _varExp   = /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g;
+		params    = uxrPluginUtils.template._transform(data);
 
         // first iteration strings/numbers etc.
         params.map(function(obj) {
