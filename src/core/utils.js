@@ -116,29 +116,23 @@
         _conditional: function(operator, lhs, rhs, data) {
             var condition = false;
 
-            if(!data) {
-                data = {};
-            }
+            if(!data) { data = {}; }
 
-            switch(operator) {
-                case undefined:
-                    condition = data.hasOwnProperty(lhs) && data[lhs] !== false;
-                    break;
-                case '==':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) === rhs;
-                    break;
-                case '!=':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) !== rhs;
-                    break;
-                case '>':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) > rhs;
-                    break;
-                case '<':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) < rhs;
-                    break;
+            if(data.hasOwnProperty(lhs) && this._operator.hasOwnProperty(operator)) {
+                condition = this._operator[operator](data[lhs], rhs);
             }
 
             return condition;
+        },
+
+        _operator: {
+            'undefined': function(lhs) { return lhs !== false; },
+            '==':        function(lhs, rhs) { return lhs === rhs; },
+            '!=':        function(lhs, rhs) { return lhs !== rhs; },
+            '>':         function(lhs, rhs) { return lhs > rhs; },
+            '>=':        function(lhs, rhs) { return lhs >= rhs; },
+            '<':         function(lhs, rhs) { return lhs < rhs; },
+            '<=':        function(lhs, rhs) { return lhs <= rhs; }
         },
 
         _replace: function(string, search, prefix) {
@@ -191,7 +185,7 @@
                             _renderedLoop = '\n';
 
                         loopData.map(function(row) {
-							var _row = _this._replace(loop[2], row, loop[1]);
+                            var _row = _this._replace(loop[2], row, loop[1]);
                             _renderedLoop += _this.conditions(_row, row);
                         });
 
@@ -206,7 +200,7 @@
 
     uxrPluginUtils.prototype.render = function(template, data) {
         var _rendered = template,
-		params    = uxrPluginUtils.template._transform(data);
+            params    = uxrPluginUtils.template._transform(data);
 
         // first iteration strings/numbers etc.
         params.map(function(obj) {
