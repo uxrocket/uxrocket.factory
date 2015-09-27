@@ -29,9 +29,7 @@
         // if callback defined via data-attribute, call it via new Function
         else {
             if(fn !== false) {
-                var func = function() {
-                    return fn;
-                };
+                var func = new Function('return ' + fn);
                 func();
             }
         }
@@ -93,6 +91,16 @@
      * Supports parameter replacement, loops, simple conditionals
      */
     uxrPluginUtils.template = {
+        _expressions: {
+            variable: /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g,
+            ifelse:   /{{#if ([a-zA-Z0-9]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
+            loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([^]+?){{\/each}}/g
+        },
+
+        _transform: function(data) {
+            return Array.isArray(data) ? data : [data];
+        },
+
         _matchAll: function(string, search) {
             var matches = [];
             string.replace(search, function() {
@@ -114,13 +122,13 @@
 
             switch(operator) {
                 case undefined:
-                    condition = data.hasOwnProperty(lhs);
+                    condition = data.hasOwnProperty(lhs) && data[lhs] !== false;
                     break;
                 case '==':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) == rhs;
+                    condition = (data.hasOwnProperty(lhs) && data[lhs]) === rhs;
                     break;
                 case '!=':
-                    condition = (data.hasOwnProperty(lhs) && data[lhs]) != rhs;
+                    condition = (data.hasOwnProperty(lhs) && data[lhs]) !== rhs;
                     break;
                 case '>':
                     condition = (data.hasOwnProperty(lhs) && data[lhs]) > rhs;
@@ -133,10 +141,6 @@
             return condition;
         },
 
-        _transform: function(data) {
-            return Array.isArray(data) ? data : [data];
-        },
-
         _replace: function(string, search, prefix) {
             var prefix = prefix ? prefix + '.' : '';
 
@@ -147,13 +151,61 @@
             });
 
             return string;
+        },
+
+        unmatched: function(rendered) {
+            return rendered.replace(this._expressions.variable);
+        },
+
+        conditions: function(rendered, data) {
+            var _this         = this,
+                hasConditions = this._matchAll(rendered, this._expressions.ifelse);
+
+            if(hasConditions) {
+                hasConditions.map(function(condition) {
+                    var _ifelse = condition[7].split('{{#else}}'),
+                        output  = '';
+
+                    if(_this._conditional(condition[2], condition[1], condition[5], data)) {
+                        output = _ifelse[0];
+                    }
+                    else if(typeof _ifelse[1] !== 'undefined') {
+                        output = _ifelse[1];
+                    }
+
+                    rendered = rendered.replace(condition[0], output);
+                });
+            }
+
+            return rendered;
+        },
+
+        loops: function(rendered, data) {
+            var _this    = this,
+                hasLoops = this._matchAll(rendered, this._expressions.loop);
+
+            if(hasLoops) {
+                hasLoops.map(function(loop) {
+                    if(data.hasOwnProperty(loop[1])) {
+                        var loopData      = _this._transform(data[loop[1]]),
+                            _renderedLoop = '\n';
+
+                        loopData.map(function(row) {
+                            _renderedLoop += _this._replace(loop[2], row, loop[1]);
+                        });
+
+                        rendered = rendered.replace(loop[0], _renderedLoop);
+                    }
+                });
+            }
+
+            return rendered;
         }
     };
 
     uxrPluginUtils.prototype.render = function(template, data) {
         var _rendered = template,
             params    = uxrPluginUtils.template._transform(data),
-            _eachExp  = /{{#each ([a-zA-Z0-9_\-]+)}}([^]+?){{\/each}}/g,
             _ifExp    = /{{#if ([a-zA-Z0-9]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
             _varExp   = /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g;
 
@@ -163,44 +215,13 @@
         });
 
         // second iteration each loops
-        var _loops = uxrPluginUtils.template._matchAll(_rendered, _eachExp);
-
-        if(_loops) {
-            _loops.map(function(loop) {
-                if(data.hasOwnProperty(loop[1])) {
-                    var loopData      = uxrPluginUtils.template._transform(data[loop[1]]),
-                        _renderedLoop = '\n';
-
-                    loopData.map(function(row) {
-                        _renderedLoop += uxrPluginUtils.template._replace(loop[2], row, loop[1]);
-                    });
-
-                    _rendered = _rendered.replace(loop[0], _renderedLoop);
-                }
-            });
-        }
+        _rendered = uxrPluginUtils.template.loops(_rendered, data);
 
         // last iteration for conditions
-        var _conditions = uxrPluginUtils.template._matchAll(_rendered, _ifExp);
-
-        if(_conditions) {
-            _conditions.map(function(condition) {
-                var _ifelse = condition[7].split('{{#else}}'),
-                    output  = '';
-
-                if(uxrPluginUtils.template._conditional(condition[2], condition[1], condition[5], data)) {
-                    output = _ifelse[0];
-                }
-                else if(typeof _ifelse[1] !== 'undefined') {
-                    output = _ifelse[1];
-                }
-
-                _rendered = _rendered.replace(condition[0], output);
-            });
-        }
+        _rendered = uxrPluginUtils.template.conditions(_rendered, data);
 
         // remove all unmatched
-        _rendered = _rendered.replace(_varExp, '');
+        _rendered = uxrPluginUtils.template.unmatched(_rendered);
 
         return _rendered;
     };
