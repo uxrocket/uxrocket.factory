@@ -93,7 +93,7 @@
     uxrPluginUtils.template = {
         _expressions: {
             variable: /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g,
-            ifelse:   /{{#if ([a-zA-Z0-9]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
+            ifelse:   /{{#if ([a-zA-Z0-9\.]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
             loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([^]+?){{\/each}}/g
         },
 
@@ -151,16 +151,21 @@
             return rendered.replace(this._expressions.variable);
         },
 
-        conditions: function(rendered, data) {
+        conditions: function(rendered, data, original) {
             var _this         = this,
                 hasConditions = this._matchAll(rendered, this._expressions.ifelse);
 
             if(hasConditions) {
                 hasConditions.map(function(condition) {
                     var _ifelse = condition[7].split('{{#else}}'),
+                        lhs     = condition[1],
                         output  = '';
 
-                    if(_this._conditional(condition[2], condition[1], condition[5], data)) {
+                    if(original) {
+                        lhs = lhs.replace(original + '.', '');
+                    }
+
+                    if(_this._conditional(condition[2], lhs, condition[5], data)) {
                         output = _ifelse[0];
                     }
                     else if(typeof _ifelse[1] !== 'undefined') {
@@ -186,7 +191,7 @@
 
                         loopData.map(function(row) {
                             var _row = _this._replace(loop[2], row, loop[1]);
-                            _renderedLoop += _this.conditions(_row, row);
+                            _renderedLoop += _this.conditions(_row, row, loop[1]);
                         });
 
                         rendered = rendered.replace(loop[0], _renderedLoop);
