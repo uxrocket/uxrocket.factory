@@ -1,0 +1,10 @@
+{
+  "name": "Factory",
+  "registry": "uxrocket.factory",
+  "version": "1.0.0-alpha1",
+  "paths": {
+    "lib": "src/",
+    "dist": "dist/",
+    "test": "test/"
+  }
+}

@@ -18,7 +18,7 @@
 }(function($, window) {
     var UXRocket = function(){};
 
-    window.UXRocket = $.uxrocket = UXRocket;
+    window.UXRocket = window.uxr = $.uxrocket = UXRocket;
 
-    console.warn('UX Rocket Factory is in alpha for now. Only Plugin utils module is available');
+    console.warn('UX Rocket Factory is in alpha for now. Currently utils module is available');
 }));

@@ -1,7 +1,7 @@
 {
   "name": "uxrocket.factory",
-  "version": "1.0.0",
-  "description": "UX Rocket Plugin Core",
+  "version": "1.0.0-alpha1",
+  "description": "UX Rocket Plugin Factory",
   "main": "src/uxrocket.factory.js",
   "scripts": {},
   "repository": {
@@ -12,12 +12,12 @@
     "plugin factory",
     "jquery plugin"
   ],
-  "author": "Rameş Aliyev <ramesaliyev@gmail.com> (https://github.com/ramesaliyev)",
+  "author": "Bilal Çınarlı <bcinarli@gmail.com> (https://github.com/bcinarli)",
   "contributors": [
     {
-      "name": "Bilal Çınarlı",
-      "email": "bcinarli@gmail.com",
-      "url": "https://github.com/bcinarli"
+      "name": "Rameş Aliyev",
+      "email": "ramesaliyev@gmail.com",
+      "url": "https://github.com/ramesaliyev"
     }
   ],
   "license": "MIT",
