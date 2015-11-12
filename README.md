@@ -1,5 +1,3 @@
 UXRocket Plugin Factory
 ----------
-Dependencies:
-- UXRocket.Utils
-- jQuery
+Second iteration of factory before ES6 based version

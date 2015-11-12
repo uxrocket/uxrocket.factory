@@ -1,36 +1,26 @@
 {
   "name": "uxrocket.factory",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha1",
   "homepage": "https://github.com/uxrocket/uxrocket.factory",
   "authors": [
-    "Rameş Aliyev <creator@ramesaliyev.com>"
+    "Bilal Çınarlı <bcinarli@gmail.com> (https://github.com/bcinarli)",
+    "Rameş Aliyev <ramesaliyev@gmail.com> (https://github.com/ramesaliyev)"
   ],
-  "description": "Plugin factory for jQuery.",
-  "main": "src/uxrocket.factory.js",
+  "description": "UX Rocket Plugin Core & Factory",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
   "keywords": [
-    "plugin",
-    "factory",
-    "jquery",
-    "plugin"
+    "UX Rocket",
+    "jQuery<"
   ],
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "*.md",
     "node_modules",
     "bower_components",
     "test",
-    "tests",
-    "coverage",
-    "docs",
-    "grunt-tasks",
-    "_src_",
-    "build",
-    "gruntfile.js",
-    "package.json"
-  ],
-  "dependencies": {
-    "jquery": "~1",
-    "uxrocket.utils": "~0.1.0"
-  }
+    "tests"
+  ]
 }
