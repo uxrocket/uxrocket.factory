@@ -16,6 +16,30 @@
         factory(jQuery, window);
     }
 }(function($, window) {
+    var UXRocket = function(){};
+
+    window.UXRocket = window.uxr = $.uxrocket = UXRocket;
+
+    console.warn('UX Rocket Factory is in alpha for now. Currently utils module is available');
+}));
+/**
+ * @author Bilal Cinarli
+ */
+
+'use strict';
+
+(function(factory) {
+    if(typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if(typeof exports === 'object' && typeof require === 'function') {
+        // Browserify
+        factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery, window);
+    }
+}(function($, window) {
     var i = 1;
 
     var uxrPlugin = function() {
@@ -206,7 +230,7 @@
 
             Object.keys(search).forEach(function(key) {
                 if(typeof search[key] !== 'object') {
-                    string = string.replace('{{' + prefix + key + '}}', search[key]) + '\n';
+                    string = string.replace(new RegExp('{{' + prefix + key + '}}', 'g'), search[key]) + '\n';
                 }
             });
 
@@ -293,29 +317,5 @@
     uxrPluginUtils.version = '0.1.0';
 
     window.uxrPluginUtils = uxrPluginUtils;
-}));
-/**
- * @author Bilal Cinarli
- */
-
-'use strict';
-
-(function(factory) {
-    if(typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if(typeof exports === 'object' && typeof require === 'function') {
-        // Browserify
-        factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery, window);
-    }
-}(function($, window) {
-    var UXRocket = function(){};
-
-    window.UXRocket = window.uxr = $.uxrocket = UXRocket;
-
-    console.warn('UX Rocket Factory is in alpha for now. Currently utils module is available');
 }));
 //# sourceMappingURL=uxrocket.factory.js.map

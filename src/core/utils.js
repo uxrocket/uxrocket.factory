@@ -140,7 +140,7 @@
 
             Object.keys(search).forEach(function(key) {
                 if(typeof search[key] !== 'object') {
-                    string = string.replace('{{' + prefix + key + '}}', search[key]) + '\n';
+                    string = string.replace(new RegExp('{{' + prefix + key + '}}', 'g'), search[key]) + '\n';
                 }
             });
 

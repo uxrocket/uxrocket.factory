@@ -1,6 +1,6 @@
 {
   "name": "uxrocket.factory",
-  "version": "1.0.0-alpha1",
+  "version": "1.0.0-alpha2",
   "description": "UX Rocket Plugin Factory",
   "main": "src/uxrocket.factory.js",
   "scripts": {},
