@@ -56,6 +56,17 @@
         return val;
     };
 
+    uxrPluginUtils.prototype.classNames = function(){
+        var _this = this,
+            classNames = {};
+
+        Object.keys(this.instance.ns.classes).forEach(function(key){
+            classNames[key] = _this.getClassname(key);
+        });
+
+        return classNames;
+    };
+
     uxrPluginUtils.prototype.getClassname = function(which) {
         return this.instance.ns.prefix + this.instance.ns.name + '-' + this.instance.ns.classes[which];
     };
