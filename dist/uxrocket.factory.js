@@ -16,30 +16,6 @@
         factory(jQuery, window);
     }
 }(function($, window) {
-    var UXRocket = function(){};
-
-    window.UXRocket = window.uxr = $.uxrocket = UXRocket;
-
-    console.warn('UX Rocket Factory is in alpha for now. Currently utils module is available');
-}));
-/**
- * @author Bilal Cinarli
- */
-
-'use strict';
-
-(function(factory) {
-    if(typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if(typeof exports === 'object' && typeof require === 'function') {
-        // Browserify
-        factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery, window);
-    }
-}(function($, window) {
     var i = 1;
 
     var uxrPlugin = function() {
@@ -146,6 +122,17 @@
         return val;
     };
 
+    uxrPluginUtils.prototype.classNames = function(){
+        var _this = this,
+            classNames = {};
+
+        Object.keys(this.instance.ns.classes).forEach(function(key){
+            classNames[key] = _this.getClassname(key);
+        });
+
+        return classNames;
+    };
+
     uxrPluginUtils.prototype.getClassname = function(which) {
         return this.instance.ns.prefix + this.instance.ns.name + '-' + this.instance.ns.classes[which];
     };
@@ -182,9 +169,9 @@
      */
     uxrPluginUtils.template = {
         _expressions: {
-            variable: /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g,
-            ifelse:   /{{#if ([a-zA-Z0-9\.]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
-            loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([^]+?){{\/each}}/g
+            variable: /{{([a-zA-Z0-9_.-]+)}}/g,
+            ifelse:   /{{#if ([a-zA-Z0-9.]+)([!=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([\s\S]+?){{\/if}}/gm,
+            loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([\s\S]+?){{\/each}}/gm
         },
 
         _transform: function(data) {
@@ -226,7 +213,7 @@
         },
 
         _replace: function(string, search, prefix) {
-            var prefix = prefix ? prefix + '.' : '';
+            prefix = prefix ? prefix + '.' : '';
 
             Object.keys(search).forEach(function(key) {
                 if(typeof search[key] !== 'object') {
@@ -317,5 +304,29 @@
     uxrPluginUtils.version = '0.1.0';
 
     window.uxrPluginUtils = uxrPluginUtils;
+}));
+/**
+ * @author Bilal Cinarli
+ */
+
+'use strict';
+
+(function(factory) {
+    if(typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if(typeof exports === 'object' && typeof require === 'function') {
+        // Browserify
+        factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery, window);
+    }
+}(function($, window) {
+    var UXRocket = function(){};
+
+    window.UXRocket = window.uxr = $.uxrocket = UXRocket;
+
+    console.warn('UX Rocket Factory is in alpha for now. Currently utils module is available');
 }));
 //# sourceMappingURL=uxrocket.factory.js.map
