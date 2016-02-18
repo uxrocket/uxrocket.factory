@@ -103,9 +103,9 @@
      */
     uxrPluginUtils.template = {
         _expressions: {
-            variable: /\{\{([a-zA-Z0-9_\.\-]+)\}\}/g,
-            ifelse:   /{{#if ([a-zA-Z0-9\.]+)([\!\=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([^]+?){{\/if}}/g,
-            loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([^]+?){{\/each}}/g
+            variable: /{{([a-zA-Z0-9_.-]+)}}/g,
+            ifelse:   /{{#if ([a-zA-Z0-9.]+)([!=><]{1,2})?(("|')?([a-zA-Z0-9_"']+)("|')?)?}}([\s\S]+?){{\/if}}/gm,
+            loop:     /{{#each ([a-zA-Z0-9_\-]+)}}([\s\S]+?){{\/each}}/gm
         },
 
         _transform: function(data) {
@@ -147,7 +147,7 @@
         },
 
         _replace: function(string, search, prefix) {
-            var prefix = prefix ? prefix + '.' : '';
+            prefix = prefix ? prefix + '.' : '';
 
             Object.keys(search).forEach(function(key) {
                 if(typeof search[key] !== 'object') {
